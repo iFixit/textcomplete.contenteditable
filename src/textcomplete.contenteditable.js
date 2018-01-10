@@ -42,7 +42,10 @@ export default class extends Editor {
         this.document.execCommand("insertText", false, replace[0] + replace[1])
         range.detach()
         const newRange = this.getRange()
-        newRange.setStart(newRange.startContainer, replace[0].length)
+
+        if (newRange.startContainer instanceof Text) {
+           newRange.setStart(newRange.startContainer, replace[0].length)
+        }
         newRange.collapse(true)
       }
     }

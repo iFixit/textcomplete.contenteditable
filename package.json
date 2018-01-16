@@ -4,6 +4,7 @@
   "description": "A textcomplete editor for content editable",
   "main": "lib/textcomplete.contenteditable.js",
   "scripts": {
+    "prepare": "run-p build:lib",
     "build": "yarn run clean && run-p build:*",
     "build:dist": "webpack && webpack --env=min",
     "build:docs": "run-p build:docs:*",

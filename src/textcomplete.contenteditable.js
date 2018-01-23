@@ -53,13 +53,21 @@ export default class extends Editor {
 
   getCursorOffset() {
     const range = this.getRange()
-    const rangeRects = range.getBoundingClientRect()
+    let rangeRects = range.getBoundingClientRect()
 
     const docRects = this.document.body.getBoundingClientRect()
-    const container = range.startContainer
+    const container: Node = range.startContainer
     const el: HTMLElement = (container instanceof Text
       ? container.parentElement
       : container: any)
+
+    if (rangeRects.width == 0 &&
+     rangeRects.height == 0 &&
+     rangeRects.x == 0 &&
+     rangeRects.y == 0 &&
+     container.parentElement) {
+      rangeRects = container.parentElement.getBoundingClientRect()
+    }
 
     const left = rangeRects.left - docRects.left
     const lineHeight = getLineHeightPx(el)
@@ -73,6 +81,8 @@ export default class extends Editor {
     const range = this.getRange()
     if (range.collapsed && range.startContainer instanceof Text) {
       return range.startContainer.wholeText.substring(0, range.startOffset)
+    } else if (range.startContainer.innerText) {
+       return range.startContainer.innerText.substring(0, range.startOffset)
     }
     return null
   }

@@ -1,5 +1,5 @@
 {
-  "name": "textcomplete.contenteditable",
+  "name": "textcomplete.contenteditable-ifixit",
   "version": "0.1.0",
   "description": "A textcomplete editor for content editable",
   "main": "lib/textcomplete.contenteditable.js",

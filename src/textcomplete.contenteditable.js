@@ -39,6 +39,7 @@ export default class extends Editor {
       if (Array.isArray(replace)) {
         const range = this.getRange()
         range.selectNode(range.startContainer)
+        range.deleteContents()
         this.document.execCommand("insertText", false, replace[0] + replace[1])
         range.detach()
         const newRange = this.getRange()
@@ -97,10 +98,6 @@ export default class extends Editor {
 
   /** @private */
   onInput(_: Event) {
-    if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
-      // Safari behaves much stranger than Chrome and Firefox.
-      return
-    }
     this.emitChangeEvent()
   }
 

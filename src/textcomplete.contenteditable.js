@@ -37,6 +37,7 @@ export default class extends Editor {
     if (before != null && after != null) {
       const replace = searchResult.replace(before, after)
       if (Array.isArray(replace)) {
+        this.stopListening()
         const range = this.getRange()
         range.selectNode(range.startContainer)
         range.deleteContents()
@@ -48,6 +49,7 @@ export default class extends Editor {
            newRange.setStart(newRange.startContainer, replace[0].length)
         }
         newRange.collapse(true)
+        this.startListening()
       }
     }
   }
@@ -92,6 +94,8 @@ export default class extends Editor {
     const range = this.getRange()
     if (range.collapsed && range.startContainer instanceof Text) {
       return range.startContainer.wholeText.substring(range.startOffset)
+    } else if (range.startContainer.innerText) {
+      return range.startContainer.innerText.substring(range.startOffset)
     }
     return null
   }
